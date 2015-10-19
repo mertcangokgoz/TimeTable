@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add New Lecture</title>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/static/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/static/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/static/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/jquery-ui.min.css">
+</head>
+<script>
+    $(document).ready(function () {
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            modal: true,
+            title: 'Add Lecture'
+        });
+        $('#add').click(function () {
+            $('#dialog').dialog('open');
+        });
+    });
+
+    $(document).ready(function () {
+        $("#button").click(function () {
+            if (confirm("Are you sure ?") == true) {
+                $.get("/Program/Delete/" + this.id, function (data, status) {
+                    alert(data);
+                    location.reload();
+                });
+            } else {
+                alert("Cancel")
+            }
+        });
+    });
+</script>
+<body>
+<div class="content" align="center">
+    <hr>
+    <div class="container">
+        <table id="remote" class="table table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Types</th>
+                <th>Lecture Time</th>
+                <th>Lecture Teacher</th>
+                <th>Lesson</th>
+                <th>Place</th>
+                <th>Day</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set i = data|length %}
+            {% if i == 1 %}
+                <h1>"Not Found :("</h1>
+            {% else %}
+                {% for item in data %}
+                    {% set i = i - 1 %}
+                    <tr>
+                        <td>
+                            {{ item[0] }}
+                        </td>
+                        <td>
+                            {{ item[1] }}
+                        </td>
+                        <td>
+                            {{ item[2] }}
+                        </td>
+                        <td>
+                            {{ item[3] }}
+                        </td>
+                        <td>
+                            {{ item[4] }}
+                        </td>
+                        <td>
+                            {{ item[5] }}
+                        </td>
+                        <td>
+                            {{ item[6] }}
+                        </td>
+                        <td>
+                            <button id="button" name="button" class="btn btn-primary">Delete</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <button id="add" name="add" class="btn btn-primary">Add</button>
+    </div>
+</div>
+<div class="header container" id="dialog">
+    <form action="/Program/Add/Send" method="post">
+        <form>
+            <fieldset>
+                <legend>Add New Lecture</legend>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Type</label>
+                    <input id="type" name="type" type="text" placeholder="placeholder"
+                           class="form-control input-md">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Lecture Time</label>
+                    <input id="lecturetime" name="lecturetime" type="text" placeholder="19 Oct 2015 09:50"
+                           class="form-control input-md">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Lecture Teacher</label>
+                    <input id="lectureteacher" name="lectureteacher" type="text" placeholder="Şahin Gökgöz"
+                           class="form-control input-md">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Lesson</label>
+                    <input id="lesson" name="lesson" type="text" placeholder="Turkish"
+                           class="form-control input-md">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Place</label>
+                    <input id="place" name="place" type="text" placeholder="C-104"
+                           class="form-control input-md">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Days</label>
+                    <input id="days" name="dats" type="text" placeholder="Monday"
+                           class="form-control input-md">
+                </div>
+                <div class="form-group">
+                    <button id="button1" name="button" class="btn btn-primary">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+body{
+    margin:0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    line-height: 1;
+    background-color: lightgray;
+}
+
+p{
+    font-family: sans-serif, cursive, monospace;
+    font-size: 22px;
+    color: white;
+}
+
+th{
+    color: white;
+}
