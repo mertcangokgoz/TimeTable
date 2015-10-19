@@ -10,20 +10,6 @@
     <link rel="stylesheet" href="/static/bootstrap.min.css">
     <link rel="stylesheet" href="/static/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/static/style.css">
-    <script>
-        $(document).ready(function () {
-            $("button").click(function () {
-                if (confirm("Are you sure ?") == true) {
-                    $.get("/Program/Delete/" + this.id, function (data, status) {
-                        alert(data);
-                        location.reload();
-                    });
-                } else {
-                    alert("Cancel")
-                }
-            });
-        });
-    </script>
 </head>
 <body>
 <div class="header">

@@ -6,7 +6,7 @@ import sys
 
 try:
     # database connection string
-    database = pymysql.connect("localhost", "root", "muratcan22", "panoDB")
+    database = pymysql.connect("localhost", "username", "password", "database")
     # prepare cursor object this metod
     cursor = database.cursor()
 

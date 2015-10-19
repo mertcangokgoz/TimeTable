@@ -30,9 +30,9 @@
     });
 
     $(document).ready(function () {
-        $("#button").click(function () {
+        $(".submit").click(function () {
             if (confirm("Are you sure ?") == true) {
-                $.get("/Program/Delete/" + this.id, function (data, status) {
+                $.get("/Program/Delete/" + this.id, function (data) {
                     alert(data);
                     location.reload();
                 });
@@ -43,6 +43,9 @@
     });
 </script>
 <body>
+<div class="header">
+    <div class="c" align="center"><h1 style="color: white;">Add Lecture</h1></div>
+</div>
 <div class="content" align="center">
     <hr>
     <div class="container">
@@ -60,9 +63,9 @@
             </tr>
             </thead>
             <tbody>
-            {% set i = data|length %}
+            {% set i = data|length +1 %}
             {% if i == 1 %}
-                <h1>"Not Found :("</h1>
+                <h1>"Not Found"</h1>
             {% else %}
                 {% for item in data %}
                     {% set i = i - 1 %}
@@ -89,7 +92,7 @@
                             {{ item[6] }}
                         </td>
                         <td>
-                            <button id="button" name="button" class="btn btn-primary">Delete</button>
+                            <button id="{{ item[0] }}" name="button" class="submit btn btn-primary">Delete</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -106,7 +109,7 @@
                 <legend>Add New Lecture</legend>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Type</label>
-                    <input id="type" name="type" type="text" placeholder="placeholder"
+                    <input id="type" name="type" type="text" placeholder="TBF202"
                            class="form-control input-md">
                 </div>
                 <div class="form-group">
@@ -116,12 +119,12 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Lecture Teacher</label>
-                    <input id="lectureteacher" name="lectureteacher" type="text" placeholder="Şahin Gökgöz"
+                    <input id="lectureteacher" name="lectureteacher" type="text" placeholder="Mertcan Gökgöz"
                            class="form-control input-md">
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Lesson</label>
-                    <input id="lesson" name="lesson" type="text" placeholder="Turkish"
+                    <input id="lesson" name="lesson" type="text" placeholder="Math"
                            class="form-control input-md">
                 </div>
                 <div class="form-group">
@@ -131,11 +134,11 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Days</label>
-                    <input id="days" name="dats" type="text" placeholder="Monday"
+                    <input id="days" name="days" type="text" placeholder="Monday"
                            class="form-control input-md">
                 </div>
                 <div class="form-group">
-                    <button id="button1" name="button" class="btn btn-primary">Submit</button>
+                    <button id="button1" name="button1" class="btn btn-primary">Submit</button>
                 </div>
             </fieldset>
         </form>

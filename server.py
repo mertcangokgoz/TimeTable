@@ -10,7 +10,7 @@ import pymysql
 import json
 import collections
 
-database = pymysql.connect("localhost", "root", "muratcan22", "panoDB")
+database = pymysql.connect("localhost", "username", "password", "databasename")
 conn = database.cursor()
 
 
@@ -20,8 +20,8 @@ def check_authenticate(username, password):
 
 def authenticate():
     return Response(
-        'Kullanici Girisi Yapmanız gerekmektedir.!', 401,
-        {'WWW-Authenticate': 'Basic realm="Yetkili Kullanici Girisi"'})
+        'Authorized User Login Area!', 401,
+        {'WWW-Authenticate': 'Basic realm="User Login"'})
 
 
 def requires_auth(f):
@@ -64,7 +64,7 @@ def ApiTech():
         selected = collections.OrderedDict()
         selected['id'] = row[0]
         selected['Type'] = row[1]
-        selected['LectureTime'] = "test"  # row[2]
+        selected['LectureTime'] = row[2]
         selected['LectureTeacher'] = row[3]
         selected['Lesson'] = row[4]
         selected['Place'] = row[5]
@@ -86,15 +86,15 @@ def AreaFill():
 @app.route("/Program/Add/Send", methods=['POST'])
 @requires_auth
 def AddPostTable():
-    Types = request.form['Types']
-    LectureTime = request.form['LectureTime']
-    LectureTeacher = request.form['LectureTeacher']
-    Lesson = request.form['Lesson']
-    Place = request.form['Place']
-    Days = request.form['Days']
+    Types = str(request.form['type'])
+    LectureTime = str(request.form['lecturetime'])
+    LectureTeacher = str(request.form['lectureteacher'])
+    Lesson = str(request.form['lesson'])
+    Place = str(request.form['place'])
+    Days = str(request.form['days'])
 
-    conn.execute("INSERT INTO TimeTable VALUES (null,?,?,?,?,?,?)",
-                 (Types, LectureTime, LectureTeacher, Lesson, Place, Days))
+    conn.execute('''INSERT INTO TimeTable VALUES (NULL,%s,%s,%s,%s,%s,%s)''',
+                 [Types, LectureTime, LectureTeacher, Lesson, Place, Days])
     database.commit()
     return "<script>document.location ='/Program/Add'</script>"
 
@@ -104,7 +104,7 @@ def AddPostTable():
 def DeletePostItems(id):
     conn.execute("DELETE FROM TimeTable WHERE  id=" + id)
     database.commit()
-    return "Deleted Items"
+    return "Deleted Item"
 
 
 if __name__ == '__main__':
