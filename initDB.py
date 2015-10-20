@@ -6,9 +6,13 @@ import sys
 
 try:
     # database connection string
-    database = pymysql.connect("localhost", "username", "password", "database")
+    database = pymysql.connect("localhost", "username", "password", "databasename")
     # prepare cursor object this metod
     cursor = database.cursor()
+    # create database
+    create = '''CREATE DATABASE databasename'''
+
+    cursor.execute(create)
 
     # drop table if it already exist
     cursor.execute("DROP TABLE IF EXISTS TimeTable")
@@ -27,7 +31,7 @@ try:
     cursor.execute(sql)
     # disconnect from the server
     database.close()
-    print("Database Created")
+    print("Database and Table Created")
 except Exception as e:
     print("\n[ Error ]\n\t Error Message:\t ", e, "\n")
     sys.exit(1)

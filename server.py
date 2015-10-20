@@ -35,6 +35,7 @@ def requires_auth(f):
     return decorated
 
 
+# define static files path
 app = Flask(__name__, static_url_path='/static')
 
 
@@ -55,6 +56,7 @@ def show_timetable():
     return render_template("timetable.html", data=data[::-1])
 
 
+# MySQL datas convert to JSON format
 @app.route('/Api')
 def ApiTech():
     conn.execute("SELECT * FROM TimeTable")
@@ -83,6 +85,7 @@ def AreaFill():
     return render_template("Add.html", data=data[::-1])
 
 
+# data post method
 @app.route("/Program/Add/Send", methods=['POST'])
 @requires_auth
 def AddPostTable():
@@ -99,6 +102,7 @@ def AddPostTable():
     return "<script>document.location ='/Program/Add'</script>"
 
 
+# data delete method
 @app.route("/Program/Delete/<id>/", methods=['GET'])
 @requires_auth
 def DeletePostItems(id):
@@ -108,4 +112,5 @@ def DeletePostItems(id):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int("8080"), debug=True)
+    # define flask run adress and port
+    app.run(host="0.0.0.0", port=int("8080"), debug=False)
