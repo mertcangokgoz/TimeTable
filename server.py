@@ -61,7 +61,7 @@ def show_timetable():
 def ApiTech():
     conn.execute("SELECT * FROM TimeTable")
     data = conn.fetchall()
-    objects_list = list()
+    objects_list = []
     for row in data:
         selected = collections.OrderedDict()
         selected['id'] = row[0]
@@ -73,8 +73,7 @@ def ApiTech():
         selected['Days'] = row[6]
         objects_list.append(selected)
 
-    j = json.dumps(objects_list)
-    return j
+    return json.dumps(objects_list)
 
 
 @app.route('/Program/Add')
@@ -106,7 +105,7 @@ def AddPostTable():
 @app.route("/Program/Delete/<id>/", methods=['GET'])
 @requires_auth
 def DeletePostItems(id):
-    conn.execute("DELETE FROM TimeTable WHERE  id=" + id)
+    conn.execute(f"DELETE FROM TimeTable WHERE  id={id}")
     database.commit()
     return "Deleted Item"
 
